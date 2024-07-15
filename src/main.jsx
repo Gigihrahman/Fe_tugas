@@ -13,6 +13,7 @@ import ProfilePage from './Pages/profile.jsx'
 import DetailProductPage from './Pages/detailProduct.jsx'
 import AdminEditPage from './Pages/adminedit.jsx'
 import PageAdminAddProduct from './Pages/adminadd.jsx'
+import {CartPage} from './Pages/cart.jsx'
 
 
 const router = createBrowserRouter([
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
   {
     path: '/addproduct',
     element: <PageAdminAddProduct />
+  },
+  {
+    path: '/productscart',
+    element: <CartPage />
   }
 ])
 

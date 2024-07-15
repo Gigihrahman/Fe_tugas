@@ -13,12 +13,19 @@
 
 // }
 // coba()
+// import axios from "axios"
 
+// try {
+//  const coba = await axios.post('http://localhost:5000/register')
+//   console.log(coba.response.status)
+// } catch (error) {
+//   console.log(error.response.status)
+//   console.log(error.response.data.message)
+// }
 
-try {
-  await axios.post(import.meta.env.VITE_API_URL + '/register', data)
-  navigate('/products')
-} catch (error) {
-  console.log(error)
-}
+import { jwtDecode } from "jwt-decode";
+const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTYsImlhdCI6MTcyMDg4Njc0NX0.Vki7W8SRS_vIGNAEDF1TOCJ6kJkMhTY1CV3wHJ8WoyU`;
+
+  const decoded = jwtDecode(token)
+  console.log(decoded.id)
 

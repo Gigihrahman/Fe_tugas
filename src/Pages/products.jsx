@@ -91,16 +91,16 @@ const ProductsPage = ()=>{
                                 <tr key={item.id}>
                                     <td>{product.name}...</td>
                                     <td>
-                                        {product.price.toLocaleString('id-ID', {style: "currency", currency:'USD'})}</td>
+                                        {product.price.toLocaleString('id-ID', {style: "currency", currency:'IDR'})}</td>
                                     <td>{item.qty}</td>
-                                    <td> {(item.qty*product.price).toLocaleString('id-ID', {style: "currency", currency:'USD'})}</td>
+                                    <td> {(item.qty*product.price).toLocaleString('id-ID', {style: "currency", currency:'IDR'})}</td>
 
                                 </tr>
                             )
                         })}
                         <tr><td colSpan={3}> Total Price
                             </td>
-                            <td> {totalPrice.toLocaleString('id-ID', { style: 'currency', currency: 'USD' })}</td>
+                            <td> {totalPrice.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</td>
                             </tr>
                     </tbody>
                 </table>

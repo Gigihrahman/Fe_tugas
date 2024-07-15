@@ -10,6 +10,7 @@ const FormRegister = () =>{
   const [selectedProvince, setSelectedProvince] = useState('0')
   const [selectedCity, setSelectedCity] = useState('0')
   const [selectedSubDistrict, setSelectedSubDistrict] = useState('0')
+  const [status, setStatus]=useState("")
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -53,6 +54,7 @@ const FormRegister = () =>{
         setSubDistricts(response.data)
       } catch (error) {
         console.error(error)
+        
       }
     }
 
@@ -81,6 +83,7 @@ console.log(event)
   navigate('/products')
 } catch (error) {
   console.log(error)
+  setStatus(error.response.data.message)
 }
 
 }
@@ -175,6 +178,9 @@ return (
     <Button classname="bg-blue-600 w-full" type="submit">
       Register
     </Button>
+    {status && (
+      <p className="text-red-500 text-center mt-5">{status}</p>
+    )}
   </form>
 )
 
