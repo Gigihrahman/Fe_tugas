@@ -4,8 +4,9 @@ export const CartPage = () => {
 
   const [products,setProducts]= useState([])
   const [cart,setCart]= useState([])
-  const [totalPrice,setTotalPrice]= useState([])
-    const getData =async()=>{
+  const [totalPrice,setTotalPrice]= useState(0)
+  const [ongkir, setOngkir] = useState(0)
+  const getData =async()=>{
         
         
         try {
@@ -18,19 +19,60 @@ export const CartPage = () => {
             
         } catch (error) {
             console.log(error)
-        }
-        
+        }        
     } 
+
+    const getOngkir = async()=>{
+      try {
+        
+        const token = localStorage.getItem('token')
+        const url = import.meta.env.VITE_API_URL
+       
+      
+        
+        const data = await axios.post(url + '/ongkir', {
+
+          cart: cart // Stringify cart data for expected
+
+        },{headers:{
+          token:token
+
+              }
+        } 
+
+
+        )
+
+       
+        setOngkir(data.data.costOngkir)
+        
+        
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+
     
  useEffect(() => {
    setCart(JSON.parse(localStorage.getItem('cart')) || [])
  }, [])
 
   useEffect(()=>{
-      // getData(cart)
+    if(cart.length >0)
+      
       getData()
+      
+      
 
   },[cart])
+
+  useEffect(()=>{
+    if (cart.length > 0 && totalPrice >0) {
+      console.log(totalPrice)
+      getOngkir()}
+      
+  },[totalPrice])
 
 
 
@@ -42,9 +84,32 @@ export const CartPage = () => {
       }, 0)
       setTotalPrice(sum)
       
+      
     }
-    console.log(totalPrice)
   }, [ products])
+
+  const increaseItem = id => {
+    if (cart.find(item => item.id === id)) {
+      setCart(
+        cart.map(item =>
+          item.id === id ? { ...item, qty: item.qty + 1 } : item
+        )
+      )
+    } else {
+      setCart([...cart, { id, qty: 1 }])
+    }
+  }
+  const decreaseItem = id => {
+    if (cart.find(item => item.id === id)) {
+      setCart(
+        cart.map(item =>
+          item.id === id ? { ...item, qty: item.qty - 1 } : item
+        )
+      )
+    } else {
+      setCart([...cart, { id, qty: 1 }])
+    }
+  }
 
 
   return (
@@ -88,13 +153,13 @@ export const CartPage = () => {
 
                           <td className="py-4">
                             <div className="flex items-center">
-                              <button className="border rounded-md py-2 px-4 mr-2">
+                              <button className="border rounded-md py-2 px-4 mr-2" onClick={()=>decreaseItem(item.id)}>
                                 -
                               </button>
                               <span className="text-center w-8">
                                 {item.qty}
                               </span>
-                              <button className="border rounded-md py-2 px-4 ml-2">
+                              <button className="border rounded-md py-2 px-4 ml-2" onClick={()=>increaseItem(item.id)}>
                                 +
                               </button>
                             </div>
@@ -121,7 +186,7 @@ export const CartPage = () => {
               </div>
               <div className="flex justify-between mb-2">
                 <span>Shipping</span>
-                <span>$0.00</span>
+                <span>{ongkir}</span>
               </div>
               <div className="my-2">
                 <div className="flex justify-between mb-2">

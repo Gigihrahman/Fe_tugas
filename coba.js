@@ -29,3 +29,16 @@ const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTYsImlhdCI6MTcyMDg4
   const decoded = jwtDecode(token)
   console.log(decoded.id)
 
+
+
+   const getOngkir =async()=>{
+        try {
+          const token = localStorage.getItem('token')
+          const data = await axios.post('/ongkir', {
+            headers: { token: token },
+            form: { cart:cart }
+          })
+          setOngkir
+        } catch (error) {
+          
+        }

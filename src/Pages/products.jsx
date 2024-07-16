@@ -25,6 +25,7 @@ const ProductsPage = ()=>{
     },[]);
     useEffect(()=>{
     getProduct()
+    
         },[])
     
     useEffect(()=>{
