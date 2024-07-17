@@ -6,6 +6,40 @@ export const CartPage = () => {
   const [cart,setCart]= useState([])
   const [totalPrice,setTotalPrice]= useState(0)
   const [ongkir, setOngkir] = useState(0)
+
+
+
+  useEffect(()=>{
+    const snapScript = 'https://app.sandbox.midtrans.com/snap/snap.js';
+    const clientKey = import.meta.env.VITE_CLIENT_KEY;
+    const script = document.createElement('script')
+    script.src= snapScript;
+    script.setAttribute('data-client-key',clientKey)
+    script.async= true;
+    document.body.appendChild(script)
+
+    return()=>{
+      document.body.removeChild(script)
+    }
+
+  },[])
+
+  const checkout= async()=>{
+    const url = import.meta.env.VITE_API_URL
+    const token= localStorage.getItem('token')
+   
+    const response = await axios.post(url+'/order',{
+      cart:cart
+    },{headers:{
+          token:token
+
+              }})
+              // const requestData = await response.json();
+              console.log(response.data.token)
+              window.snap.pay(response.data.token)
+     
+  }
+
   const getData =async()=>{
         
         
@@ -83,6 +117,7 @@ export const CartPage = () => {
         return acc + product.price * item.qty
       }, 0)
       setTotalPrice(sum)
+      localStorage.setItem('cart', JSON.stringify(cart))
       
       
     }
@@ -99,17 +134,30 @@ export const CartPage = () => {
       setCart([...cart, { id, qty: 1 }])
     }
   }
-  const decreaseItem = id => {
-    if (cart.find(item => item.id === id)) {
-      setCart(
-        cart.map(item =>
-          item.id === id ? { ...item, qty: item.qty - 1 } : item
-        )
-      )
+  const decreaseItem = (id) => {
+  // Efficiently find the item's index using findIndex
+  const index = cart.findIndex(item => item.id === id);
+
+  if (index !== -1) { // Item found
+    const newQuantity = Math.max(cart[index].qty - 1, 0); // Ensure minimum quantity is 0
+    const updatedCart = [...cart]; // Create a copy to avoid mutation
+
+    if (newQuantity === 0) {
+      // Remove item if quantity becomes zero
+      updatedCart.splice(index, 1);
     } else {
-      setCart([...cart, { id, qty: 1 }])
+      // Update quantity if not zero
+      updatedCart[index].qty = newQuantity;
     }
+
+    setCart(updatedCart); // Update state with the modified cart
+  } else {
+    // Item not found, add with quantity 1
+    setCart([...cart, { id, qty: 1 }]);
   }
+};
+
+
 
 
   return (
@@ -193,7 +241,7 @@ export const CartPage = () => {
                   <span className="font-semibold">Total</span>
                   <span className="font-semibold">{totalPrice}</span>
                 </div>
-                <button className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full">
+                <button className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full" onClick={()=>checkout()}>
                   Checkout
                 </button>
               </div>
