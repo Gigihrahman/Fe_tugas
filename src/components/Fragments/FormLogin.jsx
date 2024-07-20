@@ -2,6 +2,7 @@ import Button from "../Elements/Button/index.jsx";
 import Inputform from "../Elements/Input/index.jsx";
 import { login } from "../../services/auth.service.js";
 import { useState } from "react";
+import { Toasted} from "../Elements/toast/Toast.jsx";
 const FormLogin =() =>{
   const[loginFailed,setLoginFailed]=useState("")
   
@@ -40,7 +41,7 @@ return(<form onSubmit={handleLogin}>
             
             
             <Button classname="bg-blue-600 w-full" type="submit" >Login</Button>
-            {loginFailed && <p className="text-red-500 text-center mt-5">{loginFailed}</p>}
+            {loginFailed && <Toasted message={loginFailed} />}
           </form>);
 }
 

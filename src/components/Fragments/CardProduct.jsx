@@ -15,7 +15,7 @@ const Body =  (props)=>{
     
     return(<div className="px-5 pb-5 h-full">
                 <a href="">
-                    <h5 className="text-xl font-semibold tracking-tight text-white"> {name}...
+                    <h5 className="text-xl font-semibold tracking-tight text-white">{name}
                     </h5>
                     <p className="text-m text-white ">{text}</p>
             </a>
@@ -24,7 +24,7 @@ const Body =  (props)=>{
 
 const Footer=(props)=>{
     const {price,handleAddToCart,id} =props;
-    return( <div className="flex items-center justify-between px-5 pb-5"> <span className="text-xl font-bold text-white">{price.toLocaleString('id-ID', {style: "currency", currency:'IDR'})}</span>
+    return( <div className="flex items-center justify-between px-5 pb-5"> <span className="text-xl font-bold text-white">{price}</span>
             <Button classname="bg-blue-600" onClick ={()=>handleAddToCart(id)}>add to cart</Button>
              
             </div>)

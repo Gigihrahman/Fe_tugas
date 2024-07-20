@@ -14,12 +14,16 @@ import DetailProductPage from './Pages/detailProduct.jsx'
 import AdminEditPage from './Pages/adminedit.jsx'
 import PageAdminAddProduct from './Pages/adminadd.jsx'
 import {CartPage} from './Pages/cart.jsx'
+import { Coba } from './Pages/coba';
+import { HomePage } from './Pages/home';
+import { History } from './components/Elements/history/History.jsx'
+import { DetailPaymentUser } from './Pages/detailPaymentUser.jsx'
 
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <div>halllo</div>,
+    element: <HomePage />,
     errorElement: <ErrorPage />
   },
   {
@@ -57,6 +61,18 @@ const router = createBrowserRouter([
   {
     path: '/productscart',
     element: <CartPage />
+  },
+  {
+    path: '/coba',
+    element: <Coba />
+  },
+  {
+    path: '/history',
+    element: <History />
+  },
+  {
+    path: '/history/:id',
+    element: <DetailPaymentUser />
   }
 ])
 

@@ -3,6 +3,7 @@ import Inputform from "../Elements/Input/index.jsx";
 import { useState,useEffect } from "react";
 import { useNavigate } from 'react-router-dom'
 import axios from "axios";
+import { Toasted } from "../Elements/toast/Toast.jsx";
 const FormRegister = () =>{
   const [provinces, setProvinces] = useState([])
   const [cities, setCities] = useState([])
@@ -174,13 +175,17 @@ return (
         ))}
       </select>
     </div>
+    <Inputform
+      label="Full Address"
+      type="text"
+      placeholder="Insert your address"
+      name="fulladdress"
+    />
 
     <Button classname="bg-blue-600 w-full" type="submit">
       Register
     </Button>
-    {status && (
-      <p className="text-red-500 text-center mt-5">{status}</p>
-    )}
+    {status && <Toasted message={status} />}
   </form>
 )
 

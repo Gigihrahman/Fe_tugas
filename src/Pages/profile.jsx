@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
+import Inputform from './../components/Elements/Input/index';
+
 
 const ProfilePage= () => {
   const [provinces, setProvinces] = useState([])
@@ -69,7 +71,36 @@ const ProfilePage= () => {
       <div className="bg-gray-200">
         <div className="flex flex-col items-center justify-center h-screen">
           <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6">
+            <p className="py-5 text-slate-600 text-3xl text-center font-semibold">
+              {' '}
+              Edit Profile
+            </p>
             <form onSubmit={handleSubmit} className="p-4">
+              <Inputform
+                label="Fullname"
+                type="text"
+                placeholder="Insert your name"
+                name="fullname"
+              />
+              <Inputform
+                label="Email"
+                type="email"
+                placeholder="example@mail.com"
+                name="email"
+              />
+              <Inputform
+                label="Password"
+                type="password"
+                placeholder="******"
+                name="password"
+              />
+              <Inputform
+                label="Confirm Password"
+                type="password"
+                placeholder="******"
+                name="confirmpassword"
+              />
+
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700">
                   Province
@@ -131,6 +162,12 @@ const ProfilePage= () => {
                   ))}
                 </select>
               </div>
+              <Inputform
+                label="Address"
+                type="text"
+                placeholder="Insert your address"
+                name="address"
+              />
 
               <button
                 type="submit"
