@@ -80,7 +80,7 @@ export const History = ()=>{
                         </td>
                         <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                           <p className="text-gray-900 whitespace-no-wrap">
-                            {data.createdAt}
+                            {FormattedDate(data.createdAt)}
                           </p>
                         </td>
                         <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -118,4 +118,21 @@ export const History = ()=>{
     )
 
 
+}
+
+
+function FormattedDate( dateString ) {
+  const date = new Date(dateString)
+
+  const options = { year: 'numeric', month: '2-digit', day: '2-digit' }
+  const formattedDate = date.toLocaleDateString('en-US', options)
+
+  const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' }
+  const formattedTime = date.toLocaleTimeString('en-US', timeOptions)
+
+  return (
+    <p>
+       {formattedDate} {formattedTime}
+    </p>
+  )
 }

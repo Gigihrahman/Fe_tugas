@@ -1,15 +1,29 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Button from "../Elements/Button/index.jsx";
 
 
 const ProductAdmin = () => {
-  const [products, setProducts] = useState([]) // Initialize products as an empty array
-
+  const [products, setProducts] = useState([]) 
+  const[currentPage, setCurrentPage] = useState(1) 
+  const [maxPage,setMaxPage] = useState(0)
+  // Initialize products as an empty array
+  const handlePage = page => {
+    setcurrentPage(page)
+  }
+  
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/products')
+        const response = await axios.get('http://localhost:5000/products',{
+          params:{
+            page:currentPage,
+            limit:10
+          }
+        })
+        const maxpages = Math.ceil(response.data.pagination.totalCount / 10)
+        setMaxPage(maxpages)
         const fetchedProducts = response.data.hasil // Assuming 'hasil' is the key in the API response
         setProducts(fetchedProducts)
       } catch (error) {
@@ -75,6 +89,31 @@ active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
             </div>
           ))}
         </div>
+      <div className="flex flex-wrap justify-center content-between">
+        {currentPage > 1 && (
+          <Button
+            classname="bg-blue-600"
+            onClick={() => {
+              handlePage(currentPage - 1)
+            }}
+          >
+            -
+          </Button>
+        )}
+
+        <p className="text-3xl text-blue-500 px-5">{currentPage}</p>
+
+        {currentPage < maxPage && (
+          <Button
+            classname="bg-blue-600"
+            onClick={() => {
+              handlePage(currentPage + 1)
+            }}
+          >
+            +
+          </Button>
+        )}
+      </div>
       </div>
     </div>
   )

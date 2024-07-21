@@ -23,10 +23,13 @@ const ProductsPage = ()=>{
     const getProduct = async ()=>{
 
         try {
-             const response = await axios.post(
-               'http://localhost:5000/productsview',
-               {
-                 page: currentPage
+             const response = await axios.get(
+               'http://localhost:5000/products',
+               {params:{
+                 page: currentPage,
+                 limit:10
+              }
+                
                }
              )
             //  console.log(' response dari data api', response)
