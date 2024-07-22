@@ -18,6 +18,9 @@ import { Coba } from './Pages/coba';
 import { HomePage } from './Pages/home';
 import { History } from './components/Elements/history/History.jsx'
 import { DetailPaymentUser } from './Pages/detailPaymentUser.jsx'
+import { BrandPage } from './Pages/brand.jsx'
+import { AdminHistoryPage } from './Pages/adminhistory.jsx'
+import { AdminDetailHistory } from './Pages/admindetailhistory.jsx'
 
 
 const router = createBrowserRouter([
@@ -38,10 +41,7 @@ const router = createBrowserRouter([
     path: '/products',
     element: <ProductsPage />
   },
-  {
-    path: '/admin',
-    element: <AdminPage />
-  },
+
   {
     path: '/profile',
     element: <ProfilePage />
@@ -50,14 +50,7 @@ const router = createBrowserRouter([
     path: '/product/:id',
     element: <DetailProductPage />
   },
-  {
-    path: '/editproduct/:id',
-    element: <AdminEditPage />
-  },
-  {
-    path: '/addproduct',
-    element: <PageAdminAddProduct />
-  },
+
   {
     path: '/productscart',
     element: <CartPage />
@@ -73,6 +66,31 @@ const router = createBrowserRouter([
   {
     path: '/history/:id',
     element: <DetailPaymentUser />
+  },
+  //admin
+  {
+    path: '/admin',
+    element: <AdminPage />
+  },
+  {
+    path: '/admin/editproduct/:id',
+    element: <AdminEditPage />
+  },
+  {
+    path: '/admin/addproduct',
+    element: <PageAdminAddProduct />
+  },
+  {
+    path: '/admin/brand',
+    element: <BrandPage />
+  },
+  {
+    path: '/admin/history',
+    element: <AdminHistoryPage />
+  },
+  {
+    path: '/admin/history/:id',
+    element: <AdminDetailHistory />
   }
 ])
 

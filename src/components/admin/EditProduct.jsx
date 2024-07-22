@@ -30,6 +30,9 @@ const EditProduct = () => {
     setTitle(response.data.name);
     setFile(response.data.image);
     setPreview(response.data.url);
+    setDesc(response.data.description)
+    setBerat(response.data.berat);
+    
   };
 
   const loadImage = (e) => {

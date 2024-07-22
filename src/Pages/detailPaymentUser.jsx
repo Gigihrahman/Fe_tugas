@@ -2,6 +2,8 @@ import { useEffect,useState } from "react";
 import { useParams } from 'react-router-dom'
 import axios from "axios";
 import { FaCashRegister } from 'react-icons/fa6'
+import Button from "../components/Elements/Button/index.jsx";
+import { StatusPayment } from "../components/Elements/detailPayment/statusPayment.jsx";
 
 export const DetailPaymentUser = ()=>{
     const { id } = useParams()
@@ -14,6 +16,24 @@ export const DetailPaymentUser = ()=>{
         setHistory(response.data.data)
 
 
+    }
+
+     useEffect(() => {
+       const snapScript = 'https://app.sandbox.midtrans.com/snap/snap.js'
+       const clientKey = import.meta.env.VITE_CLIENT_KEY
+       const script = document.createElement('script')
+       script.src = snapScript
+       script.setAttribute('data-client-key', clientKey)
+       script.async = true
+       document.body.appendChild(script)
+
+       return () => {
+         document.body.removeChild(script)
+       }
+     }, [])
+
+    const snapPay = (token)=>{
+       window.snap.pay(token)
     }
     const getProducts = async ()=>{
         if(history.length > 0){
@@ -69,7 +89,7 @@ export const DetailPaymentUser = ()=>{
                                   alt="Product image"
                                 />
                                 <span className="font-semibold">
-                                   {item.Product.name}
+                                  {item.Product.name}
                                 </span>
                               </div>
                             </td>
@@ -82,10 +102,11 @@ export const DetailPaymentUser = ()=>{
                                 </span>
                               </div>
                             </td>
-                            <td className="py-4">berat</td>
+
                             <td className="py-4">
-                              {item.quantity* item.Product.berat}
+                              {item.quantity * item.Product.berat}
                             </td>
+                            <td className="py-4"> {data.gross_amount}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -94,8 +115,8 @@ export const DetailPaymentUser = ()=>{
                 </div>
                 <div className="md:w-1/4">
                   <div className="bg-white rounded-lg shadow-md p-6">
-                 <FaCashRegister size={50}/>
-                    
+                    <FaCashRegister size={50} />
+
                     <div className="my-2">
                       <div className="flex justify-between mb-2">
                         <span className="font-semibold">Total</span>
@@ -103,12 +124,11 @@ export const DetailPaymentUser = ()=>{
                           {data.gross_amount}
                         </span>
                       </div>
-                      <button
-                        className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full"
-                        onClick=""
-                      >
-                        Checkout
-                      </button>
+                      {data.status}
+                     {
+                      
+                      <StatusPayment status={data.transaction_status} onClick = {()=>{snapPay(data.token)}}></StatusPayment>
+                     }
                     </div>
                   </div>
                 </div>

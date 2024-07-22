@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-export const CheckStatus = props => {
+export const CheckStatusAdmin = props => {
   const { status, idPayment } = props
   if (status === 'Pending') {
     return (
@@ -9,8 +9,10 @@ export const CheckStatus = props => {
             aria-hidden
             className="absolute inset-0 bg-orange-200 opacity-50 rounded-full"
           ></span>
-          <Link to ={`/history/${idPayment}`}className="relative"> Pending </Link>
-         
+          <Link to={`/admin/history/${idPayment}`} className="relative">
+            {' '}
+            Pending{' '}
+          </Link>
         </span>
       </td>
     )
@@ -22,7 +24,10 @@ export const CheckStatus = props => {
             aria-hidden
             className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
           ></span>
-           <Link to ={`/history/${idPayment}`} className="relative"> Succes </Link>
+          <Link to={`/admin/history/${idPayment}`} className="relative">
+            {' '}
+            Succes{' '}
+          </Link>
         </span>
       </td>
     )

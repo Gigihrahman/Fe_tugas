@@ -172,7 +172,7 @@ export const CartPage = () => {
                   <tr>
                     <th className="text-left font-semibold">Product</th>
                     <th className="text-left font-semibold">Price</th>
-                    <th className="text-left font-semibold">Quantity</th>
+                    <th className="text-center font-semibold">Quantity</th>
                     <th className="text-left font-semibold">Weight</th>
                     <th className="text-left font-semibold">Total</th>
                   </tr>
@@ -192,7 +192,7 @@ export const CartPage = () => {
                                 src={product.url}
                                 alt="Product image"
                               />
-                              <span className="font-semibold">
+                              <span className="font-semibold absolute pt-20 ">
                                 {product.name}
                               </span>
                             </div>
@@ -200,19 +200,25 @@ export const CartPage = () => {
                           <td className="py-4">{product.price}</td>
 
                           <td className="py-4">
-                            <div className="flex items-center">
-                              <button className="border rounded-md py-2 px-4 mr-2" onClick={()=>decreaseItem(item.id)}>
+                            <div className="flex justify-center items-center">
+                              <button
+                                className="border rounded-md py-2 px-4 mr-2 "
+                                onClick={() => decreaseItem(item.id)}
+                              >
                                 -
                               </button>
                               <span className="text-center w-8">
                                 {item.qty}
                               </span>
-                              <button className="border rounded-md py-2 px-4 ml-2" onClick={()=>increaseItem(item.id)}>
+                              <button
+                                className="border rounded-md py-2 px-4 ml-2  "
+                                onClick={() => increaseItem(item.id)}
+                              >
                                 +
                               </button>
                             </div>
                           </td>
-                          <td className="py-4">{product.berat*item.qty}</td>
+                          <td className="py-4">{product.berat * item.qty}</td>
                           <td className="py-4">{item.qty * product.price}</td>
                         </tr>
                       )
@@ -228,10 +234,7 @@ export const CartPage = () => {
                 <span>Subtotal</span>
                 <span>{totalPrice}</span>
               </div>
-              <div className="flex justify-between mb-2">
-                <span>Taxes</span>
-                <span>$1.99</span>
-              </div>
+              
               <div className="flex justify-between mb-2">
                 <span>Shipping</span>
                 <span>{ongkir}</span>

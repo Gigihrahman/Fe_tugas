@@ -1,26 +1,30 @@
-import { useState,useEffect } from "react"
-import axios from "axios"
-import { CheckStatus } from "./status.jsx"
+import { useState, useEffect, Fragment } from 'react'
+import axios from 'axios'
+import { CheckStatusAdmin } from '../components/admin/payment/checkStatus.jsx'
+import Sidebar from '../components/Elements/sidebar.jsx/index.jsx'
 
+export const AdminHistoryPage = () => {
+  const [history, setHistory] = useState([])
+  const getHistory = async () => {
+    
+    const response = await axios.get(
+      import.meta.env.VITE_API_URL + '/paymentadmin'
+      
 
-export const History = ()=>{
-    const [history,setHistory]= useState([])
-    const getHistory =async()=>{
-        const token = localStorage.getItem("token")
-        const response = await axios.get(import.meta.env.VITE_API_URL+'/paymentuser',{headers:{
-            token: token
-        }})
-        console.log(response.data.data)
-        setHistory(response.data.data)
-    }
-    useEffect(()=>{
-        getHistory()
-        
-    },[])
+    )
+    console.log(response.data.data)
+    setHistory(response.data.data)
+  }
+  useEffect(() => {
+    getHistory()
+  }, [])
 
+  return (
+    <Fragment>
+      <div className="flex flex-wrap" > 
+      <Sidebar/>
 
-    return (
-      <div className="bg-white p-8 rounded-md w-full">
+      <div className="bg-white p-8">
         <div className=" flex items-center justify-between pb-6">
           <div>
             <h2 className="text-gray-600 font-semibold">History Transaction</h2>
@@ -45,7 +49,7 @@ export const History = ()=>{
                     <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                       Created at
                     </th>
-                    
+
                     <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                       Status
                     </th>
@@ -81,38 +85,25 @@ export const History = ()=>{
                             {FormattedDate(data.updatedAt)}
                           </p>
                         </td>
-                        
 
-                        <CheckStatus status={data.transaction_status} idPayment={data.id}/>
+                        <CheckStatusAdmin
+                          status={data.transaction_status}
+                          idPayment={data.id}
+                        />
                       </tr>
                     ))}
                 </tbody>
               </table>
-              <div className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
-                <span className="text-xs xs:text-sm text-gray-900">
-                  Showing 1 to 4 of 50 Entries
-                </span>
-                <div className="inline-flex mt-2 xs:mt-0">
-                  <button className="text-sm text-indigo-50 transition duration-150 hover:bg-indigo-500 bg-indigo-600 font-semibold py-2 px-4 rounded-l">
-                    Prev
-                  </button>
-                  &nbsp; &nbsp;
-                  <button className="text-sm text-indigo-50 transition duration-150 hover:bg-indigo-500 bg-indigo-600 font-semibold py-2 px-4 rounded-r">
-                    Next
-                  </button>
-                </div>
-              </div>
             </div>
           </div>
         </div>
       </div>
-    )
-
-
+      </div>
+    </Fragment>
+  )
 }
 
-
-function FormattedDate( dateString ) {
+function FormattedDate(dateString) {
   const date = new Date(dateString)
 
   const options = { year: 'numeric', month: '2-digit', day: '2-digit' }
@@ -123,7 +114,7 @@ function FormattedDate( dateString ) {
 
   return (
     <p>
-       {formattedDate} {formattedTime}
+      {formattedDate} {formattedTime}
     </p>
   )
 }

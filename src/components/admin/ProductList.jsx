@@ -47,7 +47,7 @@ const ProductAdmin = () => {
     <div className=" flex justify-content px-16 flex-1 pt-14 h-screen overflow-y-scroll">
       <div className="container mt-5 ">
         <Link
-          to="/addproduct"
+          to="/admin/addproduct"
           className="py-3 my-3 cursor-pointer transition-all bg-blue-500 text-white px-6 py-2 rounded-lg
 border-blue-600
 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px]
@@ -74,7 +74,7 @@ active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
               </div>
               <div className="flex justify-between items-center px-6 py-3 border-t border-gray-200">
                 <Link
-                  to={`/editproduct/${product.id}`}
+                  to={`/admin/editproduct/${product.id}`}
                   className="text-blue-500 hover:text-blue-700"
                 >
                   Edit
