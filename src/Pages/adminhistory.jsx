@@ -2,9 +2,11 @@ import { useState, useEffect, Fragment } from 'react'
 import axios from 'axios'
 import { CheckStatusAdmin } from '../components/admin/payment/checkStatus.jsx'
 import Sidebar from '../components/Elements/sidebar.jsx/index.jsx'
+import { useLoginAdmin } from '../hooks/useLoginAdmin.jsx'
 
 export const AdminHistoryPage = () => {
   const [history, setHistory] = useState([])
+  const name = useLoginAdmin()
   const getHistory = async () => {
     
     const response = await axios.get(

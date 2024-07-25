@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import { FaCashRegister } from 'react-icons/fa6'
 import Button from '../components/Elements/Button/index.jsx'
+import { useLoginAdmin } from '../hooks/useLoginAdmin.jsx'
 
 
 export const AdminDetailHistory = () => {
@@ -10,6 +11,7 @@ export const AdminDetailHistory = () => {
   const [products, setProducts] = useState([])
   const [history, setHistory] = useState([])
   const [totalPrice, setTotalPrice] = useState(0)
+  const name = useLoginAdmin()
   const getData = async () => {
     const response = await axios.post(
       import.meta.env.VITE_API_URL + '/detailPaymentAdmin/' + id
