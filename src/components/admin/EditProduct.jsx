@@ -11,6 +11,7 @@ const EditProduct = () => {
   const [desc, setDesc] = useState('');
   const [berat, setBerat] = useState(0);
   const [merk, setMerk] = useState([])
+  const [stock,setStock] = useState(0)
   const [selectedMerk, setSelectedMerk] = useState(0)
 
   useEffect(() => {
@@ -26,12 +27,16 @@ const EditProduct = () => {
   }
 
   const getProductById = async () => {
-    const response = await axios.get(`http://localhost:5000/products/${id}`);
+    const response = await axios.get(
+      `${import.meta.env.VITE_API_URL}/products/${id}`
+    )
     setTitle(response.data.name);
     setFile(response.data.image);
     setPreview(response.data.url);
     setDesc(response.data.description)
     setBerat(response.data.berat);
+    setStock(response.data.stock);
+   
     
   };
 
@@ -49,6 +54,7 @@ const EditProduct = () => {
       formData.append('berat', berat)
     formData.append("title", title);
     formData.append('merk',selectedMerk);
+    formData.append('stock',stock)
     const coba = Object.fromEntries(formData);
     console.log(coba)
 
@@ -58,7 +64,7 @@ const EditProduct = () => {
     console.log(formData)
     try {
       await axios
-        .patch(`http://localhost:5000/products/${id}`, formData, {
+        .patch(`${import.meta.env.VITE_API_URL}/products/${id}`, formData, {
           headers: {
             "Content-type": "multipart/form-data",
           },
@@ -124,6 +130,22 @@ const EditProduct = () => {
               className="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
               value={berat}
               onChange={e => setBerat(e.target.value)}
+              placeholder="Deskripsi"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="berat"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Stock
+            </label>
+            <input
+              type="text"
+              id="title"
+              className="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              value={stock}
+              onChange={e => setStock(e.target.value)}
               placeholder="Deskripsi"
             />
           </div>

@@ -67,14 +67,14 @@ const handleRegister = async(event)=>{
 console.log(event)
   const data = {
     username: event.target.fullname.value,
-    email: event.target.email.value ,
+    email: event.target.email.value,
 
     password: event.target.password.value,
-    confirmPassword: event.target.confirmpassword.value ,
+    confirmPassword: event.target.confirmpassword.value,
     province: selectedProvince,
     city: selectedCity,
     subdistrict: selectedSubDistrict,
-    
+    full_address: event.target.fulladdress.value
   }
 
   try {
@@ -180,6 +180,7 @@ return (
       type="text"
       placeholder="Insert your address"
       name="fulladdress"
+      
     />
 
     <Button classname="bg-blue-600 w-full" type="submit">

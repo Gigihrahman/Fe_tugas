@@ -1,4 +1,6 @@
 import { useState,useEffect } from "react";
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import { ChevronDownIcon } from '@heroicons/react/20/solid'
 
 
 
@@ -43,33 +45,18 @@ export const Coba =()=>{
      
   
   
-  const dateString = '2024-07-17T07:24:27.000Z';
 
-  return (   
-    <div>
-      <FormattedDate dateString={dateString} />
-    </div>
-
-
-
-  )
-
-
-}
-
-
-function FormattedDate({ dateString }) {
-  const date = new Date(dateString)
-
-  const options = { year: 'numeric', month: '2-digit', day: '2-digit' }
-  const formattedDate = date.toLocaleDateString('en-US', options)
-
-  const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' }
-  const formattedTime = date.toLocaleTimeString('en-US', timeOptions)
 
   return (
-    <p>
-      Formatted Date: {formattedDate} {formattedTime}
-    </p>
+    
+     <div class="flex items-center justify-center min-h-screen bg-gray-100">
+        <button class="flex items-center px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
+            <img src="https://via.placeholder.com/20" alt="Icon" className="w-10 h-10 mr-2 rounded-full"/>
+            Click Me
+        </button>
+    </div>
   )
+
+
 }
+

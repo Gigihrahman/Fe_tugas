@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight } from 'react-feather'
 export default function CarouselContent({
   children: slides,
   autoSlide = false,
-  autoSlideInterval = 3000
+  autoSlideInterval = 5000
 }) {
   const [curr, setCurr] = useState(0)
 

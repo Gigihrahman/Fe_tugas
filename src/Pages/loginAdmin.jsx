@@ -4,16 +4,17 @@ import Inputform from './../components/Elements/Input/index';
 import { Toasted } from './../components/Elements/toast/Toast';
 import { jwtDecode } from 'jwt-decode';
 import { useState } from 'react';
+import axios from 'axios';
 
 
 export const LoginAdminPage = ()=>{
     const [loginFailed,setLoginFailed] = useState("");
 
-    const getUsername = token => {
-      const decoded = jwtDecode(token)
-      console.log(decoded)
-      return decoded
-    }
+    // const getUsername = token => {
+    //   const decoded = jwtDecode(token)
+    //   console.log(decoded)
+    //   return decoded
+    // }
 
 
     const login= async(data)=>{
@@ -21,22 +22,32 @@ export const LoginAdminPage = ()=>{
        
         
     }
-    const handleLogin=(event)=>{
+    const handleLogin= async(event)=>{
          event.preventDefault();
           const data = {
-        username: event.target.username.value,
+        name: event.target.username.value,
         password: event.target.password.value,
     }
+          try {
+            const response = await axios.post(
+              import.meta.env.VITE_API_URL + '/admin',
+              data
+            )
+            console.log(response)
 
-       const response =login(data)
-       console.log(response)
-       if(token){
-        localStorage.setItem('token',response)
-        window.location.href ="/admin"
-       }
-       else{
-        setLoginFailed(token)
-       }
+            const tokenAdmin = response.data.tokenAdmin
+            console.log(tokenAdmin)
+            localStorage.setItem('tokenAdmin', tokenAdmin)
+            window.location.href = '/admin'
+            
+          } catch (error) {
+            console.log(error)
+             setLoginFailed(error.response.data)
+          }
+                  
+       
+         
+       
 
 
 

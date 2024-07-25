@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-
+import { UserOption } from '../components/Elements/user/option.jsx';
+import { useLogin } from '../hooks/uselogin.jsx';
 import Inputform from './../components/Elements/Input/index';
 
 
@@ -11,11 +12,14 @@ const ProfilePage= () => {
   const [selectedProvince, setSelectedProvince] = useState('')
   const [selectedCity, setSelectedCity] = useState('')
   const [selectedSubDistrict, setSelectedSubDistrict] = useState('')
+  const username = useLogin()
 
   useEffect(() => {
     const fetchProvinces = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/provinces')
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/provinces`
+        )
         setProvinces(response.data)
       } catch (error) {
         console.error(error)
@@ -31,7 +35,7 @@ const ProfilePage= () => {
 
       try {
         const response = await axios.get(
-          `http://localhost:5000/cities?province=${selectedProvince}`
+          `${import.meta.env.VITE_API_URL}/cities?province=${selectedProvince}`
         )
         setCities(response.data)
       } catch (error) {
@@ -48,7 +52,7 @@ const ProfilePage= () => {
 
       try {
         const response = await axios.get(
-          `http://localhost:5000/subdistricts?city=${selectedCity}`
+          `${import.meta.env.VITE_API_URL}/subdistricts?city=${selectedCity}`
         )
         setSubDistricts(response.data)
       } catch (error) {
@@ -59,16 +63,48 @@ const ProfilePage= () => {
     fetchSubDistricts()
   }, [selectedCity])
 
-  const handleSubmit = e => {
-    e.preventDefault()
+  const handleSubmit = async(event) => {
+    event.preventDefault()
     console.log('Selected Province:', selectedProvince)
     console.log('Selected City:', selectedCity)
     console.log('Selected Sub-District:', selectedSubDistrict)
+    const data = {
+      username: event.target.fullname.value,
+      
+
+      password: event.target.password.value,
+      confirmPassword: event.target.confirmpassword.value,
+      province: selectedProvince,
+      city: selectedCity,
+      subdistrict: selectedSubDistrict,
+      address: event.target.address.value
+    }
+    console.log(data)
+
+//     try {
+//   const response= await axios.post(import.meta.env.VITE_API_URL + '/register', data);
+//   console.log(response)
+//   localStorage.setItem('token', response.data.token)
+//   navigate('/products')
+// } catch (error) {
+//   console.log(error)
+//   setStatus(error.response.data.message)
+// }
+
   }
 
   return (
     <>
-      <div className="bg-gray-200">
+      <div className="flex justify-end h-20 bg-primary text-white items-center px-10 sticky top-0 z-50">
+        <UserOption username={username.username || ' '}></UserOption>
+        <a
+          className=" w-20 y-10 ml-5 rounded-lg bg-white  fixed top-5 left-5 flex justify-center"
+          href="/"
+        >
+          <p className="text-red-600">Home</p>
+        </a>
+      </div>
+      <div className="bg-secondary">
         <div className="flex flex-col items-center justify-center h-screen">
           <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6">
             <p className="py-5 text-slate-600 text-3xl text-center font-semibold">
@@ -81,13 +117,7 @@ const ProfilePage= () => {
                 type="text"
                 placeholder="Insert your name"
                 name="fullname"
-              />
-              <Inputform
-                label="Email"
-                type="email"
-                placeholder="example@mail.com"
-                name="email"
-              />
+              />             
               <Inputform
                 label="Password"
                 type="password"

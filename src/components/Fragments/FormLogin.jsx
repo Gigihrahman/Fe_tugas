@@ -19,7 +19,7 @@ const FormLogin =() =>{
     login(data,(status,res)=>{
       if(status){
         localStorage.setItem('token',res.token)
-        window.location.href= "/products";
+        window.location.href= "/";
 
       }
       else{

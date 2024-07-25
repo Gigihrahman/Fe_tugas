@@ -21,6 +21,11 @@ import { DetailPaymentUser } from './Pages/detailPaymentUser.jsx'
 import { BrandPage } from './Pages/brand.jsx'
 import { AdminHistoryPage } from './Pages/adminhistory.jsx'
 import { AdminDetailHistory } from './Pages/admindetailhistory.jsx'
+import { AdminMerkPage } from './Pages/adminmerk.jsx'
+import { AdminEditMerk } from './Pages/admineditmerk.jsx'
+import { AdminAddMerkPage } from './Pages/adminaddmerk.jsx'
+import { AdminLogin } from './Pages/adminlogin.jsx'
+import { LoginAdminPage } from './Pages/loginAdmin.jsx'
 
 
 const router = createBrowserRouter([
@@ -43,7 +48,7 @@ const router = createBrowserRouter([
   },
 
   {
-    path: '/profile',
+    path: '/editprofile',
     element: <ProfilePage />
   },
   {
@@ -91,6 +96,22 @@ const router = createBrowserRouter([
   {
     path: '/admin/history/:id',
     element: <AdminDetailHistory />
+  },
+  {
+    path: '/admin/merk',
+    element: <AdminMerkPage />
+  },
+  {
+    path: '/admin/merk/:id',
+    element: <AdminEditMerk />
+  },
+  {
+    path: '/admin/addmerk/',
+    element: <AdminAddMerkPage />
+  },
+  {
+    path: '/adminlogin',
+    element: <LoginAdminPage />
   }
 ])
 

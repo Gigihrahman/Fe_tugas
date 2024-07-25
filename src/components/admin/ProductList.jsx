@@ -10,34 +10,36 @@ const ProductAdmin = () => {
   const [maxPage,setMaxPage] = useState(0)
   // Initialize products as an empty array
   const handlePage = page => {
-    setcurrentPage(page)
+    setCurrentPage(page)
+  }
+
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/products`, {
+        params: {
+          page: currentPage,
+          limit: 10
+        }
+      })
+      const maxpages = Math.ceil(response.data.pagination.totalCount / 10)
+      setMaxPage(maxpages)
+      const fetchedProducts = response.data.hasil // Assuming 'hasil' is the key in the API response
+      setProducts(fetchedProducts)
+    } catch (error) {
+      console.error('Error fetching products:', error)
+      // Handle errors gracefully, e.g., display an error message to the user
+    }
   }
   
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get('http://localhost:5000/products',{
-          params:{
-            page:currentPage,
-            limit:10
-          }
-        })
-        const maxpages = Math.ceil(response.data.pagination.totalCount / 10)
-        setMaxPage(maxpages)
-        const fetchedProducts = response.data.hasil // Assuming 'hasil' is the key in the API response
-        setProducts(fetchedProducts)
-      } catch (error) {
-        console.error('Error fetching products:', error)
-        // Handle errors gracefully, e.g., display an error message to the user
-      }
-    }
+    
 
     fetchProducts() // Call the function to fetch products on component mount
-  }, [])
+  }, [currentPage])
   const deleteProduct = async productId => {
     try {
       await axios.delete(`http://localhost:5000/products/${productId}`)
-      getProducts()
+      fetchProducts()
     } catch (error) {
       console.log(error)
     }

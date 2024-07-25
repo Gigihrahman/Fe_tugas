@@ -10,6 +10,7 @@ const AddProduct = () => {
   const [desc,setDesc]= useState("")
   const [berat,setBerat]= useState(0)
   const[merk,setMerk]= useState([])
+  const [stock,setStock] = useState(0)
   const [selectedMerk, setSelectedMerk]= useState(0)
 
   const getMerk = async()=>{
@@ -36,15 +37,16 @@ const AddProduct = () => {
     formData.append("file", file);
     formData.append('desc',desc)
     formData.append('berat',berat)
+    formData.append('stock',stock)
 
     formData.append("title", title);
 
     try {
-      await axios.post("http://localhost:5000/products", formData, {
+      await axios.post(`${import.meta.env.VITE_API_URL}/products`, formData, {
         headers: {
-          "Content-type": "multipart/form-data",
-        },
-      });
+          'Content-type': 'multipart/form-data'
+        }
+      })
       navigate("/admin");
     } catch (error) {
       console.log(error);
@@ -103,6 +105,22 @@ const AddProduct = () => {
               placeholder="Deskripsi"
             />
           </div>
+          <div className="mb-4">
+            <label
+              htmlFor="berat"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Berat
+            </label>
+            <input
+              type="text"
+              id="title"
+              className="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              value={stock}
+              onChange={e => setStock(e.target.value)}
+              placeholder="Deskripsi"
+            />
+          </div>
 
           <div className="mb-4">
             <label className="block text-sm font-medium text-slate-500">
@@ -112,19 +130,14 @@ const AddProduct = () => {
               name="merk"
               className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               value={selectedMerk}
-              onChange={e=>setSelectedMerk(e.target.value)}
-              
+              onChange={e => setSelectedMerk(e.target.value)}
             >
-
               <option value=""> Select Merk</option>
-              {merk.map(merk =>(
-                <option
-                  key={merk.id}
-                  value={merk.id}
-                >
+              {merk.map(merk => (
+                <option key={merk.id} value={merk.id}>
                   {merk.name}
-                </option>)
-              )}
+                </option>
+              ))}
             </select>
           </div>
 

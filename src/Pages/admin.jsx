@@ -4,10 +4,12 @@ import { useState } from "react";
 import ProductAdmin from "../components/admin/ProductList.jsx";
 
 import Modal from "../components/Elements/modal/index.jsx";
+import { useLoginAdmin } from "../hooks/useLoginAdmin.jsx";
 
 
 const AdminPage = ()=>{
-    const [open, setOpen] = useState(false)
+  
+    const name = useLoginAdmin()
     return(
         <div className="flex flex-wrap" > 
             

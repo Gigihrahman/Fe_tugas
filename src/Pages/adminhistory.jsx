@@ -17,15 +17,24 @@ export const AdminHistoryPage = () => {
   }
   useEffect(() => {
     getHistory()
-  }, [])
 
-  return (
-    <Fragment>
-      <div className="flex flex-wrap" > 
-      <Sidebar/>
+    
+  }, [])
+  useEffect(( )=>{
+    if(history.length> 0){
+      console.log(history[0].itemDetails[0].Product)
+    }
+
+
+  },[history])
+
+ return (
+  <Fragment>
+    <div className="flex flex-wrap">
+      <Sidebar />
 
       <div className="bg-white p-8">
-        <div className=" flex items-center justify-between pb-6">
+        <div className="flex items-center justify-between pb-6">
           <div>
             <h2 className="text-gray-600 font-semibold">History Transaction</h2>
             <span className="text-xs">All products item</span>
@@ -44,12 +53,11 @@ export const AdminHistoryPage = () => {
                       Id Transaction
                     </th>
                     <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                      products
+                      Products
                     </th>
                     <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                       Created at
                     </th>
-
                     <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                       Status
                     </th>
@@ -57,51 +65,57 @@ export const AdminHistoryPage = () => {
                 </thead>
                 <tbody>
                   {history.length > 0 &&
-                    history.map(data => (
-                      <tr>
-                        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                          <div className="flex items-center">
-                            <div className="flex-shrink-0 w-10 h-10">
-                              <img
-                                className="w-full h-full rounded-full"
-                                src={data.itemDetails[0].Product.url}
-                                alt=""
-                              />
-                            </div>
-                            <div className="ml-3">
-                              <p className="text-gray-900 whitespace-no-wrap">
-                                {data.id}
-                              </p>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                          <p className="text-gray-900 whitespace-no-wrap">
-                            {data.itemDetails[0].Product.name}
-                          </p>
-                        </td>
-                        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                          <p className="text-gray-900 whitespace-no-wrap">
-                            {FormattedDate(data.updatedAt)}
-                          </p>
-                        </td>
+                    history.map((data) => {
+                      const product = data.itemDetails[0]?.Product;
 
-                        <CheckStatusAdmin
-                          status={data.transaction_status}
-                          idPayment={data.id}
-                        />
-                      </tr>
-                    ))}
+                      return (
+                        <tr key={data.id}>
+                          <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                            <div className="flex items-center">
+                              <div className="flex-shrink-0 w-10 h-10">
+                                {product?.url && (
+                                  <img
+                                    className="w-full h-full rounded-full"
+                                    src={product.url}
+                                    alt={product.name}
+                                  />
+                                )}
+                              </div>
+                              <div className="ml-3">
+                                <p className="text-gray-900 whitespace-no-wrap">
+                                  {data.id}
+                                </p>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                            <p className="text-gray-900 whitespace-no-wrap">
+                              {product?.name || "Product not available"}
+                            </p>
+                          </td>
+                          <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                            <p className="text-gray-900 whitespace-no-wrap">
+                              {FormattedDate(data.updatedAt)}
+                            </p>
+                          </td>
+
+                          <CheckStatusAdmin
+                            status={data.transaction_status}
+                            idPayment={data.id}
+                          />
+                        </tr>
+                      );
+                    })}
                 </tbody>
               </table>
             </div>
           </div>
         </div>
       </div>
-      </div>
-    </Fragment>
-  )
-}
+    </div>
+  </Fragment>
+);}
+
 
 function FormattedDate(dateString) {
   const date = new Date(dateString)
