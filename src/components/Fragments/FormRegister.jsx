@@ -12,6 +12,7 @@ const FormRegister = () =>{
   const [selectedCity, setSelectedCity] = useState('0')
   const [selectedSubDistrict, setSelectedSubDistrict] = useState('0')
   const [status, setStatus]=useState("")
+   const [phoneNumber, setPhoneNumber] = useState('')
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -61,6 +62,15 @@ const FormRegister = () =>{
 
     fetchSubDistricts()
   }, [selectedCity])
+const handleChange = event => {
+  const { value } = event.target
+  // Allow only digits and limit to 13 characters
+  if (/^\d{0,13}$/.test(value)) {
+    setPhoneNumber(value)
+  }
+}
+
+
 const handleRegister = async(event)=>{
    event.preventDefault();
   console.log("running function")
@@ -68,6 +78,7 @@ console.log(event)
   const data = {
     username: event.target.fullname.value,
     email: event.target.email.value,
+    numberPhone: event.target.numberPhone.value,
 
     password: event.target.password.value,
     confirmPassword: event.target.confirmpassword.value,
@@ -81,7 +92,7 @@ console.log(event)
   const response= await axios.post(import.meta.env.VITE_API_URL + '/register', data);
   console.log(response)
   localStorage.setItem('token', response.data.token)
-  navigate('/products')
+  navigate('/')
 } catch (error) {
   console.log(error)
   setStatus(error.response.data.message)
@@ -104,6 +115,25 @@ return (
       placeholder="example@mail.com"
       name="email"
     />
+    <div className="mb-6">
+      <label
+        htmlFor="numberPhone"
+        className="
+              block text-slate-700 text-sm font-bold mb-2"
+      >
+        Phone Number:
+      </label>
+      <input
+        className="text-sm border rounded w-full py-2 px-3 text-slate-700 placeholder:opacity-50"
+        type="text"
+        name="numberPhone"
+        id="numberPhone"
+        value={phoneNumber}
+        onChange={handleChange}
+        placeholder="Enter phone number"
+      />
+      <p>Phone number length: {phoneNumber.length} / 13</p>
+    </div>
     <Inputform
       label="Password"
       type="password"
@@ -180,7 +210,6 @@ return (
       type="text"
       placeholder="Insert your address"
       name="fulladdress"
-      
     />
 
     <Button classname="bg-blue-600 w-full" type="submit">

@@ -38,7 +38,7 @@ const ProductAdmin = () => {
   }, [currentPage])
   const deleteProduct = async productId => {
     try {
-      await axios.delete(`http://localhost:5000/products/${productId}`)
+      await axios.delete(`${import.meta.env.VITE_API_URL}/products/${productId}`)
       fetchProducts()
     } catch (error) {
       console.log(error)
@@ -74,7 +74,20 @@ active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
                   {product.name}
                 </h2>
               </div>
-              <div className="flex justify-between items-center px-6 py-3 border-t border-gray-200">
+              <div className="px-6 py-4">
+                <h2 className="text-sm text-gray-800">{product.description}</h2>
+              </div>
+              <div className="px-6 py-4">
+                <h2 className="text-lg font-semibold text-gray-800">
+                  Stock : {product.stock}
+                </h2>
+              </div>
+              <div className="px-6 py-4">
+                <h2 className="text-lg font-semibold text-gray-800">
+                  Weight : {product.berat}
+                </h2>
+              </div>
+              <div className="flex flex-end justify-between items-center px-6 py-3 border-t border-gray-200">
                 <Link
                   to={`/admin/editproduct/${product.id}`}
                   className="text-blue-500 hover:text-blue-700"
@@ -91,31 +104,31 @@ active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
             </div>
           ))}
         </div>
-      <div className="flex flex-wrap justify-center content-between">
-        {currentPage > 1 && (
-          <Button
-            classname="bg-blue-600"
-            onClick={() => {
-              handlePage(currentPage - 1)
-            }}
-          >
-            -
-          </Button>
-        )}
+        <div className="flex flex-wrap justify-center content-between">
+          {currentPage > 1 && (
+            <Button
+              classname="bg-blue-600"
+              onClick={() => {
+                handlePage(currentPage - 1)
+              }}
+            >
+              -
+            </Button>
+          )}
 
-        <p className="text-3xl text-blue-500 px-5">{currentPage}</p>
+          <p className="text-3xl text-blue-500 px-5">{currentPage}</p>
 
-        {currentPage < maxPage && (
-          <Button
-            classname="bg-blue-600"
-            onClick={() => {
-              handlePage(currentPage + 1)
-            }}
-          >
-            +
-          </Button>
-        )}
-      </div>
+          {currentPage < maxPage && (
+            <Button
+              classname="bg-blue-600"
+              onClick={() => {
+                handlePage(currentPage + 1)
+              }}
+            >
+              +
+            </Button>
+          )}
+        </div>
       </div>
     </div>
   )

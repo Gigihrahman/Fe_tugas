@@ -13,6 +13,8 @@ const ProfilePage= () => {
   const [selectedCity, setSelectedCity] = useState('')
   const [selectedSubDistrict, setSelectedSubDistrict] = useState('')
   const username = useLogin()
+  const [phoneNumber, setPhoneNumber] = useState('')
+  const [status,setStatus]=useState("")
 
   useEffect(() => {
     const fetchProvinces = async () => {
@@ -62,34 +64,43 @@ const ProfilePage= () => {
 
     fetchSubDistricts()
   }, [selectedCity])
+  const handleChange = event => {
+    const { value } = event.target
+    // Allow only digits and limit to 13 characters
+    if (/^\d{0,13}$/.test(value)) {
+      setPhoneNumber(value)
+    }
+  }
 
   const handleSubmit = async(event) => {
     event.preventDefault()
-    console.log('Selected Province:', selectedProvince)
-    console.log('Selected City:', selectedCity)
-    console.log('Selected Sub-District:', selectedSubDistrict)
+    const token =localStorage.getItem('token')
     const data = {
       username: event.target.fullname.value,
-      
 
+      numberPhone: event.target.numberPhone.value,
       password: event.target.password.value,
       confirmPassword: event.target.confirmpassword.value,
       province: selectedProvince,
       city: selectedCity,
       subdistrict: selectedSubDistrict,
-      address: event.target.address.value
+      full_address: event.target.address.value
     }
     console.log(data)
 
-//     try {
-//   const response= await axios.post(import.meta.env.VITE_API_URL + '/register', data);
-//   console.log(response)
-//   localStorage.setItem('token', response.data.token)
-//   navigate('/products')
-// } catch (error) {
-//   console.log(error)
-//   setStatus(error.response.data.message)
-// }
+    try {
+  const response= await axios.patch(import.meta.env.VITE_API_URL + '/user', data,{
+    headers:{
+      token:token
+    }
+  });
+  console.log(response)
+  
+  window.location.href="/"
+} catch (error) {
+  console.log(error)
+  setStatus(error.response.data.message)
+}
 
   }
 
@@ -117,7 +128,28 @@ const ProfilePage= () => {
                 type="text"
                 placeholder="Insert your name"
                 name="fullname"
-              />             
+              />
+
+              <div className="mb-6">
+                <label
+                  htmlFor="numberPhone"
+                  className="
+              block text-slate-700 text-sm font-bold mb-2"
+                >
+                  Phone Number:
+                </label>
+                <input
+                  className="text-sm border rounded w-full py-2 px-3 text-slate-700 placeholder:opacity-50"
+                  type="text"
+                  name="numberPhone"
+                  id="numberPhone"
+                  value={phoneNumber}
+                  onChange={handleChange}
+                  placeholder="Enter phone number"
+                />
+                <p>Phone number length: {phoneNumber.length} / 13</p>
+              </div>
+
               <Inputform
                 label="Password"
                 type="password"
