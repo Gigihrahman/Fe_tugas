@@ -1,19 +1,50 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import { getDetailProduct } from "../services/product.service.js";
-
+import { ToastCart } from "../components/Elements/toast/cartToast.jsx";
 const DetailProductPage = ()=>{
     const {id}= useParams();
+    const [cart, setCart] = useState([])
     const [product,setProduct]= useState({})
     useEffect(()=>{
         getDetailProduct(id,(data)=>{setProduct(data)})
     },[id])
-
+    useEffect(() => {
+      setCart(JSON.parse(localStorage.getItem('cart')) || [])
+    }, [])
+    const handleAddToCart = id => {
+      if (cart.find(item => item.id === id)) {
+        setCart(
+          cart.map(item =>
+            item.id === id ? { ...item, qty: item.qty + 1 } : item
+          )
+        )
+        console.log(cart)
+        localStorage.setItem('cart', JSON.stringify(cart))
+      } else {
+        setCart([...cart, { id, qty: 1 }])
+      }
+    }
+    useEffect(() => {
+      if (cart.length > 0) {
+        localStorage.setItem('cart', JSON.stringify(cart))
+      }
+    }, [cart])
     console.log(product)
     return (
-      <div className="w-100 min-h-screen flex justify-center items-center">
-        {Object.keys(product).length>0 && (
-          <div className="flex font-sans max-w-xl">
+      <div className="w-100 min-h-screen flex justify-center items-center ">
+        <h1>
+          {' '}
+          <a
+            className="text-3xl font-extrabold fixed top-5 left-5"
+            href="/products"
+          >
+            {' '}
+            &#8592;
+          </a>
+        </h1>
+        {Object.keys(product).length > 0 && (
+          <div className="flex font-sans max-w-xl m-3 border-4">
             <div className="flex-none w-48 relative">
               <img
                 src={product.url}
@@ -28,10 +59,10 @@ const DetailProductPage = ()=>{
                   {product.name}
                 </h1>
                 <div className="text-lg font-semibold text-slate-500">
-                  {product.price}
-                </div>
-                <div className="w-full flex-none text-sm font-medium text-slate-700 mt-2">
-                  Review 
+                  {product?.price.toLocaleString('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR'
+                  })}
                 </div>
               </div>
               <div className="flex items-baseline mt-4 mb-6 pb-6 border-b border-slate-200">
@@ -42,43 +73,18 @@ const DetailProductPage = ()=>{
               <div className="flex space-x-4 mb-6 text-sm font-medium">
                 <div className="flex-auto flex space-x-4">
                   <button
-                    className="h-10 px-6 font-semibold rounded-md bg-black text-white"
-                    type="submit"
-                  >
-                    Buy now
-                  </button>
-                  <button
                     className="h-10 px-6 font-semibold rounded-md border border-slate-200 text-slate-900"
                     type="button"
+                    onClick={() => handleAddToCart(product.id)}
                   >
                     Add to bag
                   </button>
                 </div>
-                <button
-                  className="flex-none flex items-center justify-center w-9 h-9 rounded-md text-slate-300 border border-slate-200"
-                  type="button"
-                  aria-label="Like"
-                >
-                  <svg
-                    width="20"
-                    height="20"
-                    fill="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-                    />
-                  </svg>
-                </button>
               </div>
-              <p className="text-sm text-slate-700">
-                Free shipping on all continental US orders.
-              </p>
             </form>
           </div>
         )}
+        <ToastCart total={cart.length} />
       </div>
     )
 }

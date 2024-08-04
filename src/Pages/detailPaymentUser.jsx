@@ -74,7 +74,7 @@ export const DetailPaymentUser = ()=>{
                           <th className="text-left font-semibold">Product</th>
                           <th className="text-left font-semibold">Price</th>
                           <th className="text-left font-semibold">Quantity</th>
-                          <th className="text-left font-semibold">Weight</th>
+                          <th className="text-left font-semibold">Weight(g)</th>
                           <th className="text-left font-semibold">Total</th>
                         </tr>
                       </thead>
@@ -93,7 +93,12 @@ export const DetailPaymentUser = ()=>{
                                 </span>
                               </div>
                             </td>
-                            <td className="py-4">{item.total_price}</td>
+                            <td className="py-4">
+                              {item.total_price?.toLocaleString('id-ID', {
+                                style: 'currency',
+                                currency: 'IDR'
+                              })}
+                            </td>
 
                             <td className="py-4">
                               <div className="flex items-center">
@@ -104,9 +109,17 @@ export const DetailPaymentUser = ()=>{
                             </td>
 
                             <td className="py-4">
-                              {item.quantity * item.Product.berat}
+                              {
+                                item.quantity * item.Product.berat
+                              } 
                             </td>
-                            <td className="py-4"> {data.gross_amount}</td>
+                            <td className="py-4">
+                              {' '}
+                              {data.gross_amount?.toLocaleString('id-ID', {
+                                style: 'currency',
+                                currency: 'IDR'
+                              })}
+                            </td>
                           </tr>
                         ))}
                       </tbody>
@@ -121,14 +134,21 @@ export const DetailPaymentUser = ()=>{
                       <div className="flex justify-between mb-2">
                         <span className="font-semibold">Total</span>
                         <span className="font-semibold">
-                          {data.gross_amount}
+                          {data.gross_amount?.toLocaleString('id-ID', {
+                            style: 'currency',
+                            currency: 'IDR'
+                          })}
                         </span>
                       </div>
                       {data.status}
-                     {
-                      
-                      <StatusPayment status={data.transaction_status} onClick = {()=>{snapPay(data.token)}}></StatusPayment>
-                     }
+                      {
+                        <StatusPayment
+                          status={data.transaction_status}
+                          onClick={() => {
+                            snapPay(data.token)
+                          }}
+                        ></StatusPayment>
+                      }
                     </div>
                   </div>
                 </div>

@@ -79,6 +79,11 @@ active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
               </div>
               <div className="px-6 py-4">
                 <h2 className="text-lg font-semibold text-gray-800">
+                  Price : Rp{product.price}
+                </h2>
+              </div>
+              <div className="px-6 py-4">
+                <h2 className="text-lg font-semibold text-gray-800">
                   Stock : {product.stock}
                 </h2>
               </div>

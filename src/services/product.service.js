@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const getProducts = (callback)=>{
     axios
-      .get('http://localhost:5000/products')
+      .get(import.meta.env.VITE_API_URL+'/products')
       .then(res => {
         callback(res.data.hasil)
         console.log(res.data.hasil)
@@ -14,7 +14,7 @@ export const getProducts = (callback)=>{
 
 export const getDetailProduct = (id,callback) => {
   axios
-    .get(`http://localhost:5000/products/${id}`)
+    .get(`${import.meta.env.VITE_API_URL}/products/${id}`)
     .then(res => {
       callback(res.data)
     })

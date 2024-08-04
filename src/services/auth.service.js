@@ -5,7 +5,7 @@ import { jwtDecode } from "jwt-decode";
 
 export const login= (data,callback)=>{
     axios
-      .post('http://localhost:5000/login', data)
+      .post(import.meta.env.VITE_API_URL+'/login', data)
       .then(res => {
         console.log(res)
         callback(true, res.data)

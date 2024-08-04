@@ -11,6 +11,7 @@ const AddProduct = () => {
   const [berat,setBerat]= useState(0)
   const[merk,setMerk]= useState([])
   const [stock,setStock] = useState(0)
+  const [price,setPrice] =useState(0)
   const [selectedMerk, setSelectedMerk]= useState(0)
 
   const getMerk = async()=>{
@@ -38,6 +39,9 @@ const AddProduct = () => {
     formData.append('desc',desc)
     formData.append('berat',berat)
     formData.append('stock',stock)
+    formData.append('price',price)
+    formData.append('merk',selectedMerk)
+    
 
     formData.append("title", title);
 
@@ -91,18 +95,18 @@ const AddProduct = () => {
           </div>
           <div className="mb-4">
             <label
-              htmlFor="berat"
+              htmlFor="price"
               className="block text-sm font-medium text-gray-700"
             >
-              Berat
+              Price
             </label>
             <input
               type="text"
               id="title"
               className="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
-              value={berat}
-              onChange={e => setBerat(e.target.value)}
-              placeholder="Deskripsi"
+              value={price}
+              onChange={e => setPrice(e.target.value)}
+              placeholder="Price"
             />
           </div>
           <div className="mb-4">
@@ -116,9 +120,25 @@ const AddProduct = () => {
               type="text"
               id="title"
               className="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              value={berat}
+              onChange={e => setBerat(e.target.value)}
+              placeholder="Berat"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="stock"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Stock
+            </label>
+            <input
+              type="text"
+              id="title"
+              className="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
               value={stock}
               onChange={e => setStock(e.target.value)}
-              placeholder="Deskripsi"
+              placeholder="Stock"
             />
           </div>
 

@@ -39,7 +39,7 @@ export const AdminHistoryPage = () => {
         <div className="flex items-center justify-between pb-6">
           <div>
             <h2 className="text-gray-600 font-semibold">History Transaction</h2>
-            <span className="text-xs">All products item</span>
+           
           </div>
           <div className="flex items-center justify-between">
             <div className="flex bg-gray-50 items-center p-2 rounded-md"></div>

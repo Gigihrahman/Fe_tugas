@@ -29,15 +29,12 @@ const ProductsPage = ()=>{
     const getProduct = async ()=>{
 
         try {
-             const response = await axios.get(
-               'http://localhost:5000/products',
-               {params:{
+             const response = await axios.get(import.meta.env.VITE_API_URL, {
+               params: {
                  page: currentPage,
-                 limit:10
-              }
-                
+                 limit: 10
                }
-             )
+             })
             //  console.log(' response dari data api', response)
              const data = await response.data.hasil
             //  console.log('sudah jadi json', data)
@@ -75,14 +72,12 @@ const ProductsPage = ()=>{
           setBrandId(id)
         }
         const getProductBrand = async()=>{
-            const response = await axios.get(
-               'http://localhost:5000/productmerk',
-               {params:{
-                 merk:brandId
+            const response = await axios.get(import.meta.env.VITE_API_URL+'/productmerk', {
+              params: {
+                merk: brandId
               }
-                
-               }
-             )
+            })
+            console.log(response.data.hasil)
             setproducts(response.data.hasil)
 
         }
@@ -125,6 +120,14 @@ const ProductsPage = ()=>{
             setCart([...cart,{id,qty:1}])
         }
     }
+       useEffect(() => {
+        if(cart.length > 0){
+          localStorage.setItem('cart', JSON.stringify(cart))
+
+        }
+
+        
+       }, [cart])
     return (
       <Fragment>
         <div className="flex justify-end h-20 bg-primary text-white items-center px-10 sticky top-0 z-50">
@@ -169,7 +172,10 @@ const ProductsPage = ()=>{
                     text={product.description}
                   ></CardProduct.Body>
                   <CardProduct.Footer
-                    price={product.price}
+                    price={product.price.toLocaleString('id-ID', {
+                      style: 'currency',
+                      currency: 'IDR'
+                    })}
                     id={product.id}
                     handleAddToCart={handleAddToCart}
                   />

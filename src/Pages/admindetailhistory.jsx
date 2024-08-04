@@ -100,11 +100,17 @@ export const AdminDetailHistory = () => {
                   <div className="my-2">
                     <div className="flex justify-between mb-2">
                       <span className="font-semibold">Total</span>
-                      <span className="font-semibold ">{data.gross_amount}</span>
+                      <span className="font-semibold ">
+                        {data.gross_amount}
+                      </span>
                     </div>
                     <div className="flex flex-col justify-between mb-2">
-                      <span className='font-semibold'>Shipping  :</span>
-                      <span>{"  "+data.user.full_address}</span>
+                      <span className="font-semibold">Pengiriman :</span>
+                      <span>Name: {data.user.username}</span>
+                    </div>
+                    <div className="flex flex-col justify-between mb-2">
+                      <span className="font-semibold"> Alamat Penerima:</span>
+                      <span>{'  ' + data.user.full_address}</span>
                     </div>
                   </div>
                 </div>

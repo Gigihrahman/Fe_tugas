@@ -2,10 +2,22 @@ import { useState,useEffect } from "react";
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 
+import { useNavigate } from 'react-router-dom'
 
 
 export const Coba =()=>{
-    
+     const navigate = useNavigate()
+      const timer = setTimeout(() => {
+        navigate('/')
+      }, 5000) 
+
+     useEffect(() => {
+       // Set a timer to navigate to another page after 10 seconds
+      // 10000 milliseconds = 10 seconds
+      timer
+       // Clean up the timer if the component is unmounted before the time is up
+      
+     }, [navigate])
 
 
 
@@ -60,3 +72,7 @@ export const Coba =()=>{
 
 }
 
+
+
+
+export default Coba

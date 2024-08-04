@@ -114,7 +114,7 @@ export const CartPage = () => {
     if (products.length > 0 && cart.length > 0) {
       const sum = cart.reduce((acc, item) => {
         const product = products.find(product => product.id === item.id)
-        return acc + product.price * item.qty
+        return acc + product?.price * item.qty
       }, 0)
       setTotalPrice(sum)
       localStorage.setItem('cart', JSON.stringify(cart))
@@ -193,15 +193,15 @@ export const CartPage = () => {
                             <div className="flex items-center">
                               <img
                                 className="h-16 w-16 mr-4"
-                                src={product.url}
+                                src={product?.url}
                                 alt="Product image"
                               />
                               <span className="font-semibold absolute pt-20 ">
-                                {product.name}
+                                {product?.name}
                               </span>
                             </div>
                           </td>
-                          <td className="py-4">{product.price}</td>
+                          <td className="py-4">{product?.price}</td>
 
                           <td className="py-4">
                             <div className="flex justify-center items-center">
@@ -222,8 +222,8 @@ export const CartPage = () => {
                               </button>
                             </div>
                           </td>
-                          <td className="py-4">{product.berat * item.qty}</td>
-                          <td className="py-4">{item.qty * product.price}</td>
+                          <td className="py-4">{product?.berat * item.qty}</td>
+                          <td className="py-4">{item.qty * product?.price}</td>
                         </tr>
                       )
                     })}

@@ -18,7 +18,7 @@ const FormRegister = () =>{
   useEffect(() => {
     const fetchProvinces = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/provinces')
+        const response = await axios.get(import.meta.env.VITE_API_URL+'/provinces')
         setProvinces(response.data)
       } catch (error) {
         console.error(error)
@@ -34,7 +34,7 @@ const FormRegister = () =>{
 
       try {
         const response = await axios.get(
-          `http://localhost:5000/cities?province=${selectedProvince}`
+          `${import.meta.env.VITE_API_URL}/cities?province=${selectedProvince}`
         )
         setCities(response.data)
       } catch (error) {
@@ -51,7 +51,7 @@ const FormRegister = () =>{
 
       try {
         const response = await axios.get(
-          `http://localhost:5000/subdistricts?city=${selectedCity}`
+          `${import.meta.env.VITE_API_URL}/subdistricts?city=${selectedCity}`
         )
         setSubDistricts(response.data)
       } catch (error) {
@@ -208,7 +208,7 @@ return (
     <Inputform
       label="Full Address"
       type="text"
-      placeholder="Insert your address"
+      placeholder="Insert your full address"
       name="fulladdress"
     />
 
