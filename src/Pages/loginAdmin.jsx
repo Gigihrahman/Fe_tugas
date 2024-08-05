@@ -3,13 +3,19 @@ import Button from '../components/Elements/Button/index.jsx';
 import Inputform from './../components/Elements/Input/index';
 import { Toasted } from './../components/Elements/toast/Toast';
 import { jwtDecode } from 'jwt-decode';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 
 
 export const LoginAdminPage = ()=>{
     const [loginFailed,setLoginFailed] = useState("");
+    const url = import.meta.env.VITE_API_URL
+
+
+    useEffect(() => {
+      console.log(url)
+    }, [])
 
     // const getUsername = token => {
     //   const decoded = jwtDecode(token)
@@ -18,11 +24,11 @@ export const LoginAdminPage = ()=>{
     // }
 
 
-    const login= async(data)=>{
-       await axios.post(import.meta.env.VITE_API_URL,data)
+    // const login= async(data)=>{
+    //    await axios.post(import.meta.env.VITE_API_URL,data)
        
         
-    }
+    // }
     const handleLogin= async(event)=>{
          event.preventDefault();
           const data = {
@@ -31,10 +37,11 @@ export const LoginAdminPage = ()=>{
     }
           try {
             const response = await axios.post(
-              import.meta.env.VITE_API_URL + '/admin',
+              url + '/admin',
               data
             )
             console.log(response)
+            
 
             const tokenAdmin = response.data.tokenAdmin
             console.log(tokenAdmin)

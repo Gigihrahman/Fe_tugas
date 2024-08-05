@@ -12,15 +12,19 @@ import axios from "axios";
 
 export const HomePage= ()=>{
     const [banner, setBanner] = useState([
-      '/public/images/artboardbanner1.png',
-      '/public/images/artboardbanner2.png',
-      '/public/images/artboardbanner3.png'
+      '/images/artboardbanner1.png',
+      '/images/artboardbanner2.png',
+      '/images/artboardbanner3.png'
     ])
      const [username, setUsername] = useState('')
      const [brand,setBrand]= useState([])
  const getBrandData = async () => {
-   const response = await axios.get(import.meta.env.VITE_API_URL + '/merk')
-   console.log(response)
+  const url = import.meta.env.VITE_API_URL
+   const response = await axios.get(`${url}/merk`)
+   console.log(`${url}/merk`)
+   console.log(response.data)
+   console.log('ini datane:  ' + response)
+  
    setBrand(response.data.merk)
  }
      const checkLogin = ()=>{

@@ -26,7 +26,7 @@ export const AdminLogin = async() => {
   }
 
   return (
-    <form onSu >
+    <form onSubmit={handleLogin} >
       <Inputform
         label="Username"
         type="text"
