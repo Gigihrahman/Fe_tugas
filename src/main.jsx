@@ -26,6 +26,7 @@ import { AdminEditMerk } from './Pages/admineditmerk.jsx'
 import { AdminAddMerkPage } from './Pages/adminaddmerk.jsx'
 import { AdminLogin } from './Pages/adminlogin.jsx'
 import { LoginAdminPage } from './Pages/loginAdmin.jsx'
+import { ThanksPage } from './Pages/thankspage.jsx'
 
 
 const router = createBrowserRouter([
@@ -72,6 +73,11 @@ const router = createBrowserRouter([
     path: '/history/:id',
     element: <DetailPaymentUser />
   },
+  {
+    path: '/succespayment',
+    element: <ThanksPage />
+  },
+
   //admin
   {
     path: '/admin',
