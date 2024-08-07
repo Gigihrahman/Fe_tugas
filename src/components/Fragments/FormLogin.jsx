@@ -11,7 +11,7 @@ const FormLogin =() =>{
     
    
         const data = {
-        username: event.target.username.value,
+        email: event.target.email.value,
         password: event.target.password.value,
         
 
@@ -30,10 +30,10 @@ const FormLogin =() =>{
 
 return(<form onSubmit={handleLogin}>
             
-            <Inputform label ="Username"
-             type="text"
-              placeholder="example" 
-              name="username"/>
+            <Inputform label ="Email"
+             type="email"
+              placeholder="example@mail.com" 
+              name="email"/>
             <Inputform label ="Password"
               type="password"
                placeholder="******"
