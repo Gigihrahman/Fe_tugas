@@ -43,6 +43,7 @@ export const CartPage = () => {
     // const requestData = await response.json();
     console.log(response.data.tokenPay)
     window.snap.pay(response.data.tokenPay)
+    localStorage.removeItem('cart')
    } catch (error) {
     
     setMessage(error.response.data.message)

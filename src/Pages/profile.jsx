@@ -29,7 +29,7 @@ const ProfilePage= () => {
       }
     })
     const data =response.data.user
-    console.log(data)
+    console.log(response)
     setSelectedProvince(data.province_code)
     setSelectedCity(data.city_code)
     setSelectedSubDistrict(data.subdistricts_code)

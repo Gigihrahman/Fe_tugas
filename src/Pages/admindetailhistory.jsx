@@ -18,7 +18,7 @@ export const AdminDetailHistory = () => {
   const [subdistrictCode,setSubdistrictCode] =useState(0)
  const [subdistrictName, setSubdistrictName] = useState('')
   const name = useLoginAdmin()
-  const apiKey = '76f42eea4723e7cda981bd0365df9995'
+  
   const getData = async () => {
     const response = await axios.post(
       import.meta.env.VITE_API_URL + '/detailPaymentAdmin/' + id
@@ -77,6 +77,13 @@ export const AdminDetailHistory = () => {
       {history.map(data => (
         <div className="bg-gray-100 h-screen py-8">
           <div className="container mx-auto px-4">
+            <h1>
+              {' '}
+              <a className="text-3xl font-extrabold" href="/admin/history">
+                {' '}
+                &#8592;
+              </a>
+            </h1>
             <h1 className="text-2xl font-semibold mb-4">The Transaction</h1>
             <div className="flex flex-col md:flex-row gap-4">
               <div className="md:w-3/4">

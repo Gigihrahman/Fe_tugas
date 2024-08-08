@@ -16,7 +16,7 @@ export const CheckStatusAdmin = props => {
         </span>
       </td>
     )
-  } else if (status === 'Success') {
+  } else if (status === 'Success' || status === 'capture' || status === 'settlement') {
     return (
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
         <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
