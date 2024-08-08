@@ -3,7 +3,7 @@ import Input from "./Input.jsx";
 
 
 const Inputform = (props)=>{
-    const {label, name,placeholder,type,maxlength} = props;
+    const {label, name,placeholder,type,maxlength,required} = props;
     return (
       <div className="mb-6">
         <Label htmlFor={name}>{label}</Label>
@@ -12,6 +12,7 @@ const Inputform = (props)=>{
           type={type}
           placeholder={placeholder}
           maxlength={maxlength}
+          required={required}
         />
       </div>
     )

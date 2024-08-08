@@ -1,5 +1,6 @@
 import  { useEffect, useState } from 'react'
 import axios from 'axios'
+import { ToastedCheckout } from '../components/Elements/toast/toastCheckout.jsx'
 export const CartPage = () => {
 
   const [products,setProducts]= useState([])
@@ -27,16 +28,26 @@ export const CartPage = () => {
   const checkout= async()=>{
     const url = import.meta.env.VITE_API_URL
     const token= localStorage.getItem('token')
-   
-    const response = await axios.post(url+'/order',{
-      cart:cart
-    },{headers:{
-          token:token
-
-              }})
-              // const requestData = await response.json();
-              console.log(response.data.tokenPay)
-              window.snap.pay(response.data.tokenPay)
+   try {
+    const response = await axios.post(
+      url + '/order',
+      {
+        cart: cart
+      },
+      {
+        headers: {
+          token: token
+        }
+      }
+    )
+    // const requestData = await response.json();
+    console.log(response.data.tokenPay)
+    window.snap.pay(response.data.tokenPay)
+   } catch (error) {
+    
+    setMessage(error.response.data.message)
+   }
+    
      
   }
 
@@ -165,7 +176,10 @@ export const CartPage = () => {
       <div className="container mx-auto px-4">
         <h1>
           {' '}
-          <a className='text-3xl font-extrabold' href="/products"> &#8592;</a>
+          <a className="text-3xl font-extrabold" href="/products">
+            {' '}
+            &#8592;
+          </a>
         </h1>
         <h1 className="text-2xl font-semibold mb-4">Shopping Cart</h1>
         <div className="flex flex-col md:flex-row gap-4">
@@ -255,6 +269,7 @@ export const CartPage = () => {
                   Checkout
                 </button>
               </div>
+              {message && <ToastedCheckout message={message} />}
             </div>
           </div>
         </div>

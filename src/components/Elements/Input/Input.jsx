@@ -1,5 +1,5 @@
 const Input=(props) =>{
-    const { type, placeholder, name, maxlength } = props
+    const { type, placeholder, name, maxlength,required=false } = props
     return (
       <input
         type={type}
@@ -7,7 +7,8 @@ const Input=(props) =>{
         placeholder={placeholder}
         name={name}
         id={name}
-        maxlength={maxlength}
+        maxLength={maxlength}
+        required={required}
       />
     )
 }

@@ -3,6 +3,8 @@ import axios from 'axios'
 import { UserOption } from '../components/Elements/user/option.jsx';
 import { useLogin } from '../hooks/uselogin.jsx';
 import Inputform from './../components/Elements/Input/index';
+import { Toasted } from '../components/Elements/toast/Toast.jsx';
+import { EditToasted } from '../components/Elements/toast/editToast.jsx';
 
 
 const ProfilePage= () => {
@@ -15,6 +17,29 @@ const ProfilePage= () => {
   const username = useLogin()
   const [phoneNumber, setPhoneNumber] = useState('')
   const [status,setStatus]=useState("")
+  const [address, setAddress] = useState('')
+  const [fullname,setFullname]= useState('')
+  
+
+  const getUser = async() =>{
+    const token = localStorage.getItem('token')
+    const response = await axios.get(import.meta.env.VITE_API_URL + '/userid', {
+      headers: {
+        token: token
+      }
+    })
+    const data =response.data.user
+    console.log(data)
+    setSelectedProvince(data.province_code)
+    setSelectedCity(data.city_code)
+    setSelectedSubDistrict(data.subdistricts_code)
+    setPhoneNumber(data.number_phone)
+    setAddress(data.full_address)
+    setFullname(data.username)
+  }
+  useEffect(()=>{
+    getUser()
+  },[])
 
   useEffect(() => {
     const fetchProvinces = async () => {
@@ -76,7 +101,7 @@ const ProfilePage= () => {
     event.preventDefault()
     const token =localStorage.getItem('token')
     const data = {
-      username: event.target.fullname.value,
+      username: event.target.fullName.value,
 
       numberPhone: event.target.numberPhone.value,
       password: event.target.password.value,
@@ -103,6 +128,14 @@ const ProfilePage= () => {
 }
 
   }
+  const handleFullNameChange =(event)=>{
+    const {value} = event.target;
+    setFullname(value)
+  }
+   const handleAddress = event => {
+     const { value } = event.target
+     setAddress(value)
+   }
 
   return (
     <>
@@ -115,7 +148,7 @@ const ProfilePage= () => {
           <p className="text-red-600">Home</p>
         </a>
       </div>
-      <div className="bg-secondary">
+      <div className="bg-secondary py-20">
         <div className="flex flex-col items-center justify-center h-screen">
           <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6">
             <p className="py-5 text-slate-600 text-3xl text-center font-semibold">
@@ -123,12 +156,23 @@ const ProfilePage= () => {
               Edit Profile
             </p>
             <form onSubmit={handleSubmit} className="p-4">
-              <Inputform
-                label="Fullname"
-                type="text"
-                placeholder="Insert your name"
-                name="fullname"
-              />
+              <div className="mb-6">
+                <label
+                  htmlFor="fullName"
+                  className="block text-slate-700 text-sm font-bold mb-2"
+                >
+                  Full Name:
+                </label>
+                <input
+                  className="text-sm border rounded w-full py-2 px-3 text-slate-700 placeholder:opacity-50"
+                  type="text"
+                  name="fullName"
+                  id="fullName"
+                  value={fullname}
+                  onChange={handleFullNameChange}
+                  placeholder="Enter full name"
+                />
+              </div>
 
               <div className="mb-6">
                 <label
@@ -224,12 +268,23 @@ const ProfilePage= () => {
                   ))}
                 </select>
               </div>
-              <Inputform
-                label="Address"
-                type="text"
-                placeholder="Insert your address"
-                name="address"
-              />
+              <div className="mb-6">
+                <label
+                  htmlFor="address"
+                  className="block text-slate-700 text-sm font-bold mb-2"
+                >
+                  address:
+                </label>
+                <input
+                  className="text-sm border rounded w-full py-2 px-3 text-slate-700 placeholder:opacity-50"
+                  type="text"
+                  name="address"
+                  id="address"
+                  value={address}
+                  onChange={handleAddress}
+                  placeholder="Enter full address"
+                />
+              </div>
 
               <button
                 type="submit"
@@ -238,6 +293,7 @@ const ProfilePage= () => {
                 Submit
               </button>
             </form>
+            {status && <EditToasted message={status} />}
           </div>
         </div>
       </div>

@@ -11,12 +11,23 @@ export const AdminDetailHistory = () => {
   const [products, setProducts] = useState([])
   const [history, setHistory] = useState([])
   const [totalPrice, setTotalPrice] = useState(0)
+  const [provinceCode,setProvinceCode] = useState(0)
+   const [provinceName, setProvinceName] = useState('')
+  const [cityCode,setcityCode]=useState(0)
+ const [cityName, setCityName] = useState('')
+  const [subdistrictCode,setSubdistrictCode] =useState(0)
+ const [subdistrictName, setSubdistrictName] = useState('')
   const name = useLoginAdmin()
+  const apiKey = '76f42eea4723e7cda981bd0365df9995'
   const getData = async () => {
     const response = await axios.post(
       import.meta.env.VITE_API_URL + '/detailPaymentAdmin/' + id
     )
     console.log(response)
+    const data= response.data.data[0]
+    setProvinceCode(data.recipient_province)
+    setcityCode(data.recipient_district)
+    setSubdistrictCode(data.recipient_subdistrict)
     setHistory(response.data.data)
   }
 
@@ -38,6 +49,28 @@ export const AdminDetailHistory = () => {
   //       calculateTotalPrice()
   //     }
   // },[history])
+
+  useEffect(() => {
+    const fetchaddressname = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/spesifik?id=${subdistrictCode}`
+          
+        )
+        
+        setProvinceName(response.data.rajaongkir.results.province)
+        setCityName(response.data.rajaongkir.results.city)
+        setSubdistrictName(response.data.rajaongkir.results.subdistrict_name)
+      } catch (error) {
+        console.error('Error fetching province name:', error)
+      }}
+      if(subdistrictCode>0){
+        fetchaddressname()
+
+      }
+    },[subdistrictCode])
+
+    
 
   return (
     <div>
@@ -86,7 +119,7 @@ export const AdminDetailHistory = () => {
                           <td className="py-4">
                             {item.quantity * item.Product.berat}
                           </td>
-                          <td className="py-4"> {data.gross_amount}</td>
+                          <td className="py-4"> {item.total_price}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -106,11 +139,27 @@ export const AdminDetailHistory = () => {
                     </div>
                     <div className="flex flex-col justify-between mb-2">
                       <span className="font-semibold">Pengiriman :</span>
-                      <span>Name: {data.user.username}</span>
+                      <span>Name: {data.recipient_name}</span>
                     </div>
                     <div className="flex flex-col justify-between mb-2">
                       <span className="font-semibold"> Alamat Penerima:</span>
-                      <span>{'  ' + data.user.full_address}</span>
+                      <span>{'  ' + data.recipient_fulladdress}</span>
+                    </div>
+                    <div className="flex flex-col justify-between mb-2">
+                      <span className="font-semibold"> Provinsi:</span>
+                      <span> {provinceName} </span>
+                    </div>
+                    <div className="flex flex-col justify-between mb-2">
+                      <span className="font-semibold"> Kabupaten:</span>
+                      <span>{cityName}</span>
+                    </div>
+                    <div className="flex flex-col justify-between mb-2">
+                      <span className="font-semibold"> Kecamatan:</span>
+                      <span>{subdistrictName}</span>
+                    </div>
+                    <div className="flex flex-col justify-between mb-2">
+                      <span className="font-semibold"> Nomer HP:</span>
+                      <span>{data.recipient_phoneNumber}</span>
                     </div>
                   </div>
                 </div>

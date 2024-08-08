@@ -27,19 +27,18 @@ export const History = ()=>{
         <div className="flex justify-end h-20 bg-primary text-white items-center px-10 sticky top-0 z-50">
           <UserOption username={username.username || ' '}></UserOption>
           <a
-            className=" w-20 y-10 ml-5 rounded-lg bg-white  fixed top-5 left-5 flex justify-center"
+            className="w-20 y-10 ml-5 rounded-lg bg-white fixed top-5 left-5 flex justify-center"
             href="/"
           >
             <p className="text-red-600">Home</p>
           </a>
         </div>
         <div className="bg-white p-8 rounded-md w-full">
-          <div className=" flex items-center justify-between pb-6">
+          <div className="flex items-center justify-between pb-6">
             <div>
               <h2 className="text-gray-600 font-semibold">
                 History Transaction
               </h2>
-             
             </div>
             <div className="flex items-center justify-between">
               <div className="flex bg-gray-50 items-center p-2 rounded-md"></div>
@@ -55,65 +54,61 @@ export const History = ()=>{
                         Id Transaction
                       </th>
                       <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                        products
+                        Products
                       </th>
                       <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                         Created at
                       </th>
-
                       <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                         Status
                       </th>
                     </tr>
                   </thead>
                   <tbody>
-                   
-                      {history.length > 0 &&
-                        history.map(data => {
-                          const product = data.itemDetails[0]?.Product
+                    {history.length > 0 &&
+                      history.map(data => {
+                        const product = data.itemDetails[0]?.Product
 
-                          return (
-                            <tr key={data.id}>
-                              <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                <div className="flex items-center">
-                                  <div className="flex-shrink-0 w-10 h-10">
-                                    {product?.url && (
-                                      <img
-                                        className="w-full h-full rounded-full"
-                                        src={product.url}
-                                        alt={product.name}
-                                      />
-                                    )}
-                                  </div>
-                                  <div className="ml-3">
-                                    <p className="text-gray-900 whitespace-no-wrap">
-                                      {data.id}
-                                    </p>
+                        return (
+                          <tr key={data.id}>
+                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                              <div className="flex items-center">
+                                <div className="flex-shrink-0 w-10 h-10">
+                                  {product?.url && (
+                                    <img
+                                      className="w-full h-full rounded-full"
+                                      src={product.url}
+                                      alt={product.name}
+                                    />
+                                  )}
+                                </div>
+                                <div className="ml-3">
+                                  <div className="text-gray-900 whitespace-no-wrap">
+                                    {data.id}
                                   </div>
                                 </div>
-                              </td>
-                              <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                <p className="text-gray-900 whitespace-no-wrap">
-                                  {product?.name || 'Product not available'}
-                                </p>
-                              </td>
-                              <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                <p className="text-gray-900 whitespace-no-wrap">
-                                  {FormattedDate(data.updatedAt)}
-                                </p>
-                              </td>
+                              </div>
+                            </td>
+                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                              <div className="text-gray-900 whitespace-no-wrap">
+                                {product?.name || 'Product not available'}
+                              </div>
+                            </td>
+                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                              <div className="text-gray-900 whitespace-no-wrap">
+                                {FormattedDate(data.updatedAt)}
+                              </div>
+                            </td>
 
-                              <CheckStatus
-                                status={data.transaction_status}
-                                idPayment={data.id}
-                              />
-                            </tr>
-                          )
-                        })}
-                   
+                            <CheckStatus
+                              status={data.transaction_status}
+                              idPayment={data.id}
+                            />
+                          </tr>
+                        )
+                      })}
                   </tbody>
                 </table>
-                
               </div>
             </div>
           </div>

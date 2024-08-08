@@ -1,23 +1,23 @@
 
 import Button from "../Button/index.jsx";
 
-export const StatusPayment = (props)=>{
-    const { status, onClick = () => {} } = props
-     if (status === 'Pending') {
+export const StatusPayment = props => {
+  const { status, onClick = () => {} } = props
 
-        return(
-    <Button
-          classname="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full"
+ 
+  if (status === 'Pending' || status === 'pending') {
+    return (
+      <div>
+        <Button
+          className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full"
           onClick={onClick}
         >
-          checkput
-        </Button>)
-     }
+          Checkout
+        </Button>
+      </div>
+    )
+  }
 
-     else if(status === 'Succes'){
-
-     }
-
-
-
+ 
+  return null
 }
