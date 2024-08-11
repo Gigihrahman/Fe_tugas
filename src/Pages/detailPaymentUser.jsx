@@ -31,7 +31,7 @@ export const DetailPaymentUser = ()=>{
     }
 
      useEffect(() => {
-       const snapScript = 'https://app.sandbox.midtrans.com/snap/snap.js'
+       const snapScript = import.meta.env.VITE_SNAPJS
        const clientKey = import.meta.env.VITE_CLIENT_KEY
        const script = document.createElement('script')
        script.src = snapScript
